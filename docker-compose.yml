@@ -1,0 +1,37 @@
+version: '3.6'
+
+services:
+  web:
+    build: .
+    volumes:
+      - ./:/app
+    working_dir: /app
+    command: puma
+    ports:
+      - 3000:3000
+    depends_on:
+      - db
+    environment:
+      DATABASE_HOST: db
+  db:
+    image: mysql:5.7
+    restart: always
+    ports:
+      # <Port exposed> : < MySQL Port running inside container>
+      - '3306:3306'
+    expose:
+      # Opens port 3306 on the container
+      - '3306'
+    environment:
+      MYSQL_DATABASE: 'smart-tasks_development'
+      # So you don't have to use root, but you can if you like
+      MYSQL_USER: 'smart-tasks'
+      # You can use whatever password you like
+      MYSQL_PASSWORD: 'smart-tasks-password'
+      # Password for root access
+      MYSQL_ROOT_PASSWORD: 'password'
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080

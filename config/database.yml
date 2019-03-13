@@ -14,8 +14,8 @@ default: &default
   encoding: utf8
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   username: root
-  password:
-  host: localhost
+  password: password
+  host: <%= ENV['DATABASE_HOST'] %>
 
 development:
   <<: *default
@@ -51,4 +51,4 @@ production:
   <<: *default
   database: smart-tasks_production
   username: smart-tasks
-  password: <%= ENV['SMART-TASKS_DATABASE_PASSWORD'] %>
+  password: smart-tasks-password #<%= ENV['SMART-TASKS_DATABASE_PASSWORD'] %>
